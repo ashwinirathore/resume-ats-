@@ -55,7 +55,7 @@ if uploaded_file is not None:
 
 submit1 = st.button("Tell Me About the Resume")
 
-#submit2 = st.button("How Can I Improvise my Skills")
+submit2 = st.button("How Can I Improvise my Skills")
 
 submit3 = st.button("Percentage match")
 
@@ -64,7 +64,19 @@ input_prompt1 = """
   Please share your professional evaluation on whether the candidate's profile aligns with the role. 
  Highlight the strengths and weaknesses of the applicant in relation to the specified job requirements.
 """
+input_prompt2 = """
+You are a Senior Career Coach and Skill Development Expert. 
+Your task is to analyze the resume in comparison with the job description and identify the exact skills the candidate needs to improve.
 
+Provide:
+1. A clear list of missing or weak skills.
+2. Actionable steps to improve each skill (courses, projects, tools to learn).
+3. A personalized learning roadmap (Beginner → Intermediate → Expert).
+4. Practical mini-projects the candidate can do to strengthen their resume.
+5. Final summary on how these improvements will increase their chances of getting the job.
+
+Keep the explanation simple, professional, and directly useful for the candidate.
+"""
 input_prompt3 = """
 You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
 your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
@@ -79,7 +91,14 @@ if submit1:
         st.write(response)
     else:
         st.write("Please uplaod the resume")
-
+elif submit2:
+    if uploaded_file is not None:
+        pdf_content=input_pdf_setup(uploaded_file)
+        response=get_gemini_response(input_prompt2,pdf_content,input_text)
+        st.subheader("The Repsonse is")
+        st.write(response)
+    else:
+        st.write("Please uplaod the resume")
 elif submit3:
     if uploaded_file is not None:
         pdf_content=input_pdf_setup(uploaded_file)
